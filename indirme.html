@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<title>İNDİRME</title>
+<meta charset="utf-8">
+</head>
+<body>
+<div id="main">
+  <input type="text" id="veriler" value="VERİLER">
+  <button id="olustur" onclick="olustur()">OLUŞTUR</button>
+  <a download="veri.txt" id="indir">
+    <button id="bindir" disabled=true>İNDİR</button>
+  </a>
+  <input type="file" id="dosya" onchange="oku()" accept=".txt">
+
+</div>
+<script>
+function oku() {
+  var veriler = document.getElementById("veriler");
+  var dosya = document.getElementById("dosya").files[0];
+  var okunan = new FileReader();
+  okunan.readAsText(dosya);
+  okunan.onload = function() {
+      veriler.value = okunan.result;
+  };
+}
+
+function olustur() {
+  var veriler = document.getElementById("veriler");
+  var veri = veriler.value;
+  var format = window.URL.createObjectURL(new Blob([veri], {type: "text/plain"}));
+  var link = document.getElementById("indir");
+  link.href = format;
+  document.getElementById("bindir").disabled = false;
+}
+</script>
+</body>
+</html>
